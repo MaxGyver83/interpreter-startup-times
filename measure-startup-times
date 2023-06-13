@@ -1,0 +1,51 @@
+#!/bin/bash
+case "$1" in
+    shells)    interpreters='node ruby python php fish clisp zsh bash yash perl lua oksh luajit dash mksh busybox noop' ;;
+    nonshells) interpreters='node ruby python php fish clisp zsh bash yash perl lua oksh luajit dash mksh busybox noop' ;;
+    others)    interpreters='groovy xonsh nu mrsh rc' ;;
+    beta)      interpreters='mrsh rc' ;;
+    fastest)   interpreters='node ruby python php fish clisp zsh bash yash perl lua oksh luajit dash mksh busybox noop' ;;
+    all|*)     interpreters='groovy xonsh node ruby nu python php rc fish clisp zsh bash yash perl lua mrsh oksh luajit dash mksh busybox noop' ;;
+esac
+
+if [ "$1" = versions ]; then
+    for interpreter in $interpreters; do
+        [ $interpreter = noop ] && continue
+        printf '%7s: ' ${interpreter/busybox/ash}
+        case "$interpreter" in
+        groovy)        $interpreter --version 2>&1 | grep -m 1 Version ;;
+        bash|yash|php|clisp)
+                       $interpreter --version | head -n 1 ;;
+        perl)          $interpreter --version | grep -m 1 . ;;
+        lua*)          $interpreter -v ;;
+        busybox)       $interpreter | head -n 1 ;;
+        dash|oksh)     pacman --color=never -Qe $interpreter 2>/dev/null \
+                       || echo "Unknown version" ;;
+        mksh)          $interpreter -c 'echo $KSH_VERSION' ;;
+        rc)            echo "2023-04-19" ;;
+        mrsh)          echo "2022-09-14" ;;
+        *)             $interpreter --version ;;
+        esac
+    done
+    exit 0
+fi
+
+iterations=30
+TIMEFORMAT='%3R'
+echo "$iterations iterations"
+echo "Startup time per iteration:"
+
+for interpreter in $interpreters; do
+    case $interpreter in
+    noop)                       set -- ':' ;;
+    busybox)                    set -- busybox sh -c '' ;;
+    clisp)                      set -- $interpreter -q -x '()' ;;
+    lua*|ruby|perl|node|groovy) set -- $interpreter -e '' ;;
+    php)                        set -- $interpreter -r '' ;;
+    *)                          set -- $interpreter -c '' ;;
+    esac
+    duration="$( { time for i in $(seq 1 $iterations); do "$@"; done; } 2>&1 | grep '^[0-9,.]\+$')"
+    duration="$(echo "scale=2; ${duration/,/.} * 1000 / $iterations" \
+                | bc | sed 's/^\./0./')"
+    printf '%-8s %6s ms\n' "$interpreter" "$duration"
+done

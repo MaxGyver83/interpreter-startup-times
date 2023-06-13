@@ -1,0 +1,39 @@
+#!/bin/sh
+usage() {
+    echo 'Usage:
+create-plot [-h|all|most|fast|medium|slow|all-plots]'
+    exit
+}
+
+create_plot() {
+    grep -E "$1" results.txt | gnuplot -e "outfile='$2'" plot.gnu
+}
+
+# change to this script's directory
+cd -P -- "$(dirname -- "$0")"
+
+if [ ! -f results.txt ]; then
+    echo "Run './measure-startup-times | tee results.txt' first!"
+    exit 1
+fi
+
+SLOW='groovy|xonsh|node|ruby|nu|python|php'
+MEDIUM='ruby|nu|python|php|rc|fish|clisp'
+FAST='rc|fish|clisp|zsh|bash|yash|perl|lua|mrsh|oksh|luajit|dash|mksh|ash'
+MOST="node|ruby|nu|python|php|$FAST" # up to 100 ms
+ALL="groovy|xonsh|$MOST"
+
+[ ${#} = 0 ] && usage
+
+[ "$1" = 'all-plots' ] && set -- most fast slow
+
+for option in "${@}"; do
+    case "$option" in
+    -h|--help) usage ;;
+    fast)      create_plot "$FAST" fast.png ;;
+    medium)    create_plot "$MEDIUM" medium.png ;;
+    slow)      create_plot "$SLOW" slow.png ;;
+    most)      create_plot "$MOST" below_100ms.png ;;
+    all)       create_plot "$ALL" all.png ;;
+    esac
+done
