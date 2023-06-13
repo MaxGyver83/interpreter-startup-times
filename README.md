@@ -1,7 +1,7 @@
 # Interpreter startup times benchmark
 
 This repository contains a (bash) [script](./measure-startup-times) to measure
-the startup times of various scripting language intepreters and a (POSIX shell)
+the startup times of various scripting language interpreters and a (POSIX shell)
 [script](./create-plot) to plot the results with gnuplot.
 
 Startup times are determined by starting every interpreter with an empty
