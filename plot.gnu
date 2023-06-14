@@ -1,6 +1,7 @@
 load 'turbo.pal'
 set cbrange [0:100]
 if (!exists("outfile")) outfile='graph.png'
+if (exists("log")) set logscale y 10; set logscale cb; set cbrange [0:1000]; unset colorbox
 set term png size 1080,600
 set output outfile
 set title font "Monospaced,14" 'Startup times'

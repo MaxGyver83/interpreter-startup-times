@@ -1,12 +1,13 @@
 #!/bin/sh
 usage() {
     echo 'Usage:
-create-plot [-h|all|most|fast|medium|slow|all-plots]'
+create-plot [-h] [-l] [all|most|fast|medium|slow|all-plots]'
     exit
 }
 
 create_plot() {
-    grep -E "$1" results.txt | gnuplot -e "outfile='$2'" plot.gnu
+    [ $LOGARITHMIC ] && log="-e log='true'"
+    grep -E "$1" results.txt | gnuplot -e "outfile='$2'" $log plot.gnu
 }
 
 # change to this script's directory
@@ -25,11 +26,17 @@ ALL="groovy|xonsh|$MOST"
 
 [ ${#} = 0 ] && usage
 
+for option in "${@}"; do
+    case "$option" in
+    -h|--help) usage ;;
+    -l|--log*) LOGARITHMIC=1; shift ;;
+    esac
+done
+
 [ "$1" = 'all-plots' ] && set -- most fast slow
 
 for option in "${@}"; do
     case "$option" in
-    -h|--help) usage ;;
     fast)      create_plot "$FAST" fast.png ;;
     medium)    create_plot "$MEDIUM" medium.png ;;
     slow)      create_plot "$SLOW" slow.png ;;

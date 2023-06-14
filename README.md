@@ -11,17 +11,21 @@ expression 30 times and then calculating the average.
 languages as measured on my laptop (ASUS B9440UA, from 2017) with Arch Linux
 installed.
 
-## Startup times for all interpreters faster than 100 ms
+## Startup times for interpreters faster than 100 ms
 
 ![below 100ms](https://maximilian-schillinger.de/img/below_100ms.png)
 
-## Startup times for all interpreters faster than 10 ms
+## Startup times for interpreters faster than 10 ms
 
 ![fastest interpreters](https://maximilian-schillinger.de/img/fast.png)
 
-## Startup times for all interpreters slower than 10 ms
+## Startup times for interpreters slower than 10 ms
 
 ![slowest interpreters](https://maximilian-schillinger.de/img/slow.png)
+
+## Startup times for all interpreters with a logarithmic scale
+
+![all interpreters logarithmic scale](https://maximilian-schillinger.de/img/all.png)
 
 ## Versions
 
@@ -86,5 +90,8 @@ above plus `gnuplot` installed (and `wget` or a browser for downloading
 ```sh
 ./measure-startup-times all | tee results.txt
 wget https://raw.githubusercontent.com/Gnuplotting/gnuplot-palettes/master/turbo.pal
+# create the first three plots shown above
 ./create-plot all-plots
+# create the fourth plot shown above
+./create-plot -l all
 ```
