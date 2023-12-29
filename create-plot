@@ -7,7 +7,8 @@ create-plot [-h] [-l] [all|most|fast|medium|slow|all-plots]'
 
 create_plot() {
     [ $LOGARITHMIC ] && log="-e log='true'"
-    grep -E "$1" results.txt | gnuplot -e "outfile='$2'" $log plot.gnu
+    [ $WIDE ] && wide="-e wide='true'"
+    grep -E "$1" results.txt | gnuplot -e "outfile='$2'" $log $wide plot.gnu
 }
 
 # change to this script's directory
@@ -30,6 +31,7 @@ for option in "${@}"; do
     case "$option" in
     -h|--help) usage ;;
     -l|--log*) LOGARITHMIC=1; shift ;;
+    -w|--wide) WIDE=1; shift ;;
     esac
 done
 
