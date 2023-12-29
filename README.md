@@ -37,7 +37,7 @@ installed.
      nu: 0.81.0
  python: Python 3.11.3
     php: PHP 8.2.7 (cli) (built: Jun 10 2023 08:47:39) (NTS)
-     rc: 2023-04-19
+     rc: 2023-12-27
    fish: fish, version 3.6.1
   clisp: GNU CLISP 2.49.93+ (2018-02-18) (built on root2 [65.108.105.205])
     zsh: zsh 5.9 (x86_64-pc-linux-gnu)

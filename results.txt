@@ -7,7 +7,6 @@ ruby      50.23 ms
 nu        42.63 ms
 python    15.60 ms
 php       13.03 ms
-rc         6.80 ms
 fish       6.76 ms
 clisp      6.60 ms
 zsh        2.46 ms
@@ -18,6 +17,7 @@ lua        1.00 ms
 mrsh       0.90 ms
 oksh       0.90 ms
 luajit     0.86 ms
+rc         0.83 ms
 dash       0.80 ms
 mksh       0.73 ms
 ash        0.33 ms
