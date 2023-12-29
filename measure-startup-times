@@ -4,8 +4,8 @@ case "$1" in
     nonshells) interpreters='node ruby python php fish clisp zsh bash yash perl lua oksh luajit dash mksh busybox noop' ;;
     others)    interpreters='groovy xonsh nu mrsh rc' ;;
     beta)      interpreters='mrsh rc' ;;
-    fastest)   interpreters='node ruby python php fish clisp zsh bash yash perl lua oksh luajit dash mksh busybox noop' ;;
-    all|*)     interpreters='groovy xonsh node ruby nu python php rc fish clisp zsh bash yash perl lua mrsh oksh luajit dash mksh busybox noop' ;;
+    fastest)   interpreters='fennel node ruby python php fish clisp bb sbcl janet zsh bash yash perl lua oksh luajit dash mksh busybox noop' ;;
+    all|*)     interpreters='groovy xonsh fennel node ruby nu python php fish clisp bb sbcl janet zsh bash yash perl lua mrsh oksh luajit rc dash mksh busybox noop' ;;
 esac
 
 if [ "$1" = versions ]; then
@@ -17,7 +17,7 @@ if [ "$1" = versions ]; then
         bash|yash|php|clisp)
                        $interpreter --version | head -n 1 ;;
         perl)          $interpreter --version | grep -m 1 . ;;
-        lua*)          $interpreter -v ;;
+        lua*|janet)    $interpreter -v ;;
         busybox)       $interpreter | head -n 1 ;;
         dash|oksh)     pacman --color=never -Qe $interpreter 2>/dev/null \
                        || echo "Unknown version" ;;
@@ -39,8 +39,10 @@ for interpreter in $interpreters; do
     case $interpreter in
     noop)                       set -- ':' ;;
     busybox)                    set -- busybox sh -c '' ;;
-    clisp)                      set -- $interpreter -q -x '()' ;;
-    lua*|ruby|perl|node|groovy) set -- $interpreter -e '' ;;
+    clisp)                      set -- $interpreter -norc -q -x '()' ;;
+    sbcl)                       set -- $interpreter --non-interactive --no-userinit --eval '()' ;;
+    lua*|ruby|perl|node|groovy|fennel|janet|bb)
+                                set -- $interpreter -e '' ;;
     php)                        set -- $interpreter -r '' ;;
     *)                          set -- $interpreter -c '' ;;
     esac

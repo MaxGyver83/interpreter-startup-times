@@ -19,10 +19,10 @@ if [ ! -f results.txt ]; then
     exit 1
 fi
 
-SLOW='groovy|xonsh|node|ruby|nu|python|php'
-MEDIUM='ruby|nu|python|php|rc|fish|clisp'
-FAST='rc|fish|clisp|zsh|bash|yash|perl|lua|mrsh|oksh|luajit|dash|mksh|ash'
-MOST="node|ruby|nu|python|php|$FAST" # up to 100 ms
+SLOW='groovy|xonsh|fennel|node|ruby|nu|python|php'
+MEDIUM='ruby|nu|python|php|fish|clisp|bb'
+FAST='fish|clisp|bb|sbcl|janet|zsh|bash|yash|perl|lua|mrsh|oksh|luajit|rc|dash|mksh|ash'
+MOST="fennel|node|ruby|nu|python|php|$FAST" # up to 100 ms
 ALL="groovy|xonsh|$MOST"
 
 [ ${#} = 0 ] && usage

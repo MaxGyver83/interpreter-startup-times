@@ -32,6 +32,7 @@ installed.
 ```
  groovy: Groovy Version: 4.0.12 JVM: 1.8.0_372 Vendor: Oracle Corporation OS: Linux
   xonsh: xonsh/0.14.0
+ fennel: Fennel 1.4.0 on PUC Lua 5.4
    node: v20.2.0
    ruby: ruby 3.0.5p211 (2022-11-24 revision ba5cf0f7c5) [x86_64-linux]
      nu: 0.81.0
@@ -40,6 +41,9 @@ installed.
      rc: 2023-12-27
    fish: fish, version 3.6.1
   clisp: GNU CLISP 2.49.93+ (2018-02-18) (built on root2 [65.108.105.205])
+     bb: babashka v1.3.186
+   sbcl: SBCL 2.3.11
+  janet: 1.32.1-a93517f
     zsh: zsh 5.9 (x86_64-pc-linux-gnu)
    bash: GNU bash, Version 5.1.16(1)-release (x86_64-pc-linux-gnu)
    yash: Yet another shell, version 2.52
@@ -93,5 +97,5 @@ wget https://raw.githubusercontent.com/Gnuplotting/gnuplot-palettes/master/turbo
 # create the first three plots shown above
 ./create-plot all-plots
 # create the fourth plot shown above
-./create-plot -l all
+./create-plot -l -w all
 ```

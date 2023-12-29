@@ -2,6 +2,7 @@
 Startup time per iteration:
 groovy   889.53 ms
 xonsh    186.20 ms
+fennel    91.86 ms
 node      78.90 ms
 ruby      50.23 ms
 nu        42.63 ms
@@ -9,6 +10,9 @@ python    15.60 ms
 php       13.03 ms
 fish       6.76 ms
 clisp      6.60 ms
+bb         5.23 ms
+sbcl       3.56 ms
+janet      2.86 ms
 zsh        2.46 ms
 bash       2.33 ms
 yash       2.10 ms
